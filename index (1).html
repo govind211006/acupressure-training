@@ -1,0 +1,151 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASPEUS प्रयागराज - ऑनलाइन बेसिक प्रशिक्षण (Ayurvedic Acupressure)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        h2 {
+            color: #3498db;
+        }
+        p, li {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+        }
+        ul {
+            list-style-type: disc;
+            text-align: left;
+            margin: 0 auto;
+            max-width: 600px;
+        }
+        .highlight {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .contact {
+            margin-top: 20px;
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ASPEUS प्रयागराज</h1>
+        <h2>ऑनलाइन बेसिक प्रशिक्षण (Ayurvedic Acupressure)</h2>
+        <p><strong>तारीख:</strong> 08 & 09 मार्च 2025</p>
+        <p><strong>समय:</strong> शाम 4:00 बजे से 6:30 बजे तक</p>
+        <p><strong>फीस:</strong> 500 रुपये</p>
+        <p><strong>प्रमाण पत्र:</strong> डिजिटल प्रमाण पत्र, डिजिटल स्टडी मैटेरियल व पूरे क्लास की वीडियो रिकॉर्डिंग प्रदान की जाएगी।</p>
+
+        <h2>प्रशिक्षण की मुख्य विशेषताएं</h2>
+        <ul>
+            <li>अपने घर पर रहकर एक्यूप्रेशर सीखें अपनी सहजता व सुविधा से।</li>
+            <li>किसी भी उम्र का व्यक्ति इसे सीख सकता है।</li>
+            <li>स्वयं और परिवार का उपचार किया जा सकता है।</li>
+            <li>एक्यूप्रेशर के सिद्धांत और अवधारणा को पढ़ाया जाएगा।</li>
+            <li>दबाव, बीज, रंग और मैग्नेट के माध्यम से प्रैक्टिकल सिखाया जाएगा।</li>
+            <li>एक्यू उपकरणों का उपयोग, NATURO मेडीसिन का उपयोग बताया जाएगा।</li>
+            <li>कोई साइड इफेक्ट नहीं, कोई दर्द नहीं, कोई दवा नहीं।</li>
+            <li>थ्योरी और प्रैक्टिकल दोनों ही समान रूप से समझाया जाएगा।</li>
+        </ul>
+
+        <h2>शुल्क जमा करें</h2>
+        <p>ICICI Bank A/C Number: <span class="highlight">628205024963</span></p>
+        <p>IFSC Code: <span class="highlight">ICIC0006282</span></p>
+        <p>Name: Acupressure Shodh Prashikshan Evam Upchar Sansthan</p>
+        <p>Branch: Civil Lines, Allahabad</p>
+
+        <h2>इन विवरणों को भेजें</h2>
+        <p>इनमें से किसी एक संपर्क पर निम्नलिखित विवरण भेजें:</p>
+        <ul>
+            <li>उम्मीदवार का नाम</li>
+            <li>पिता का नाम</li>
+            <li>माता का नाम</li>
+            <li>आयु</li>
+            <li>व्हाट्सएप मोबाइल नंबर</li>
+            <li>शहर का नाम</li>
+            <li>पूरा पता पिन कोड सहित</li>
+            <li>शैक्षिक योग्यता</li>
+            <li>जमा करने की तारीख</li>
+            <li>लेनदेन नंबर या भुगतान का स्क्रीनशॉट</li>
+        </ul>
+
+        <div class="contact">
+            <h2>संपर्क करें</h2>
+            <p>▪️ श्री करण केशरवानी: <span class="highlight">+917755021114</span></p>
+            <p>▪️ श्री हरिशंकर त्रिपाठी: <span class="highlight">+918327775215</span></p>
+            <p>किसी भी जानकारी के लिए संपर्क करें:</p>
+            <p>विशाल जायसवाल: <span class="highlight">+919335835005</span></p>
+        </div>
+
+        <div class="footer">
+            <p>आयोजित: ASPEUS, प्रयागराज</p>
+        </div>
+    </div>
+</body>
+</html>
